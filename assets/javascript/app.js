@@ -26,9 +26,10 @@ $(document).ready(function () {
 
     var count = 0;
     var intervalid;
+    var clicked = false;
 
     //  Display the question function after hitting the start button
-    function questionFunction(index) {
+    function displayQuestion(index) {
         if (index < questionArr.length) {
 
             $("main").empty();
@@ -46,34 +47,54 @@ $(document).ready(function () {
     };
 
 
-    function inputAnswer() {
-        console.log(this.innerHTML);
-        if (this.innerHTML == "Gotham City" || this.innerHTML == "Iron" || this.innerHTML == "Radiation") {
-            $("main").empty();
-            $("main").text("Correct Answer!");
-            clearInterval(intervalid);
-            setTimeout(timingQuestion, 1000);
+    function inputAnswerCompare(event) {
+
+        if (clicked == true) {
+            console.log(event);
+            if (event.currentTarget.innerHTML == "Gotham City" || event.currentTarget.innerHTML == "Iron" || event.currentTarget.innerHTML == "Radiation") {
+                $("main").empty();
+                $("main").text("Correct Answer!");
+                clearInterval(intervalid);
+                setTimeout(timingQuestion, 1000);
+            }
+            else {
+                $("main").empty();
+                $("main").text("Wrong Answer!");
+                clearInterval(intervalid);
+                setTimeout(timingQuestion, 1000);
+            }
         }
-        else {
-            $("main").empty();
-            $("main").text("Wrong Answer!");
-            clearInterval(intervalid);
-            setTimeout(timingQuestion, 1000);
-        }
+        
     };
 
 
 
-    function displayNextQuestion() {
-        questionFunction(count);
-        $(".question-class").on("click", inputAnswer);
+    function displayQuestionAndListenForInput() {
+        displayQuestion(count);
+
+        $(".question-class").on("click", function (event) {
+
+            clicked = true;
+            
+            // $(".question-class").on("click", inputAnswerCompare);
+            inputAnswerCompare(event);
+            //}
+
+        });
+        // if (clicked == false) {
+        //     $("main").empty();
+        //     $("main").text("Times up!");
+        //     clearInterval(intervalid);
+        //     setTimeout(timingQuestion, 1000);
+        // }
+
         count++;
 
     };
 
     function timingQuestion() {
-        displayNextQuestion();
-        intervalid = setInterval(displayNextQuestion, 10000);
+        displayQuestionAndListenForInput();
+        intervalid = setInterval(displayQuestionAndListenForInput, 10000);
 
         if (count == questionArr.length) {
             clearInterval(intervalid);
