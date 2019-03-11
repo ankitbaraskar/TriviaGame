@@ -27,6 +27,8 @@ $(document).ready(function () {
     var count = 0;
     var intervalid;
     var clicked = false;
+    var time = 10;
+    var timeIntervalID;
 
     //  Display the question function after hitting the start button
     function displayQuestion(index) {
@@ -56,37 +58,59 @@ $(document).ready(function () {
                 $("main").text("Correct Answer!");
                 clearInterval(intervalid);
                 setTimeout(timingQuestion, 1000);
+
+                clearInterval(timeIntervalID);
+                $("#timer-id").empty();
+                time = 10;
             }
             else {
                 $("main").empty();
                 $("main").text("Wrong Answer!");
                 clearInterval(intervalid);
                 setTimeout(timingQuestion, 1000);
+
+                clearInterval(timeIntervalID);
+                $("#timer-id").empty();
+                time = 10;
             }
         }
-        
+
     };
 
 
 
     function displayQuestionAndListenForInput() {
+
+        //  clear any timers first
+        clearInterval(timeIntervalID);
+        //  to display the 10seconds
+        $("#timer-id").html("Time remaining: " + time);
+        //  to decrease time by one second
+        timeIntervalID = setInterval(function () {
+            time--;
+            $("#timer-id").html("Time remaining: " + time);
+        }, 1000);
+
         displayQuestion(count);
+
 
         $(".question-class").on("click", function (event) {
 
             clicked = true;
-            
-            // $(".question-class").on("click", inputAnswerCompare);
             inputAnswerCompare(event);
-            //}
-
         });
-        // if (clicked == false) {
-        //     $("main").empty();
-        //     $("main").text("Times up!");
-        //     clearInterval(intervalid);
-        //     setTimeout(timingQuestion, 1000);
-        // }
+
+
+        if (clicked == false && time == 0) {
+            clearInterval(timeIntervalID);
+            $("#timer-id").empty();
+            time = 10;
+
+            $("main").empty();
+            $("main").text("Times up!");
+            clearInterval(intervalid);
+            setTimeout(timingQuestion, 1000);
+        }
 
         count++;
 
