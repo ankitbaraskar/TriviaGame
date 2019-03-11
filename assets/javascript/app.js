@@ -32,7 +32,7 @@ $(document).ready(function () {
 
     //  Display the question function after hitting the start button
     function displayQuestion(index) {
-        if (index < questionArr.length) {
+        if (index < questionArr.length && time !== 0) {
 
             $("main").empty();
             var viewQuestion = $("<div>");
@@ -89,6 +89,18 @@ $(document).ready(function () {
         timeIntervalID = setInterval(function () {
             time--;
             $("#timer-id").html("Time remaining: " + time);
+
+            if (clicked == false && time == 0) {
+                clearInterval(timeIntervalID);
+                $("#timer-id").empty();
+                time = 10;
+
+                $("main").empty();
+                $("main").text("Times up!");
+                clearInterval(intervalid);
+                setTimeout(timingQuestion, 1000);
+            }
+
         }, 1000);
 
         displayQuestion(count);
@@ -100,25 +112,17 @@ $(document).ready(function () {
             inputAnswerCompare(event);
         });
 
-
-        if (clicked == false && time == 0) {
-            clearInterval(timeIntervalID);
-            $("#timer-id").empty();
-            time = 10;
-
-            $("main").empty();
-            $("main").text("Times up!");
-            clearInterval(intervalid);
-            setTimeout(timingQuestion, 1000);
-        }
-
         count++;
+
 
     };
 
     function timingQuestion() {
+
         displayQuestionAndListenForInput();
-        intervalid = setInterval(displayQuestionAndListenForInput, 10000);
+
+
+        // intervalid = setInterval(displayQuestionAndListenForInput, 10000);
 
         if (count == questionArr.length) {
             clearInterval(intervalid);
