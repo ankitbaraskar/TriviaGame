@@ -24,11 +24,15 @@ $(document).ready(function () {
         }
     ];
 
+    
     var count = 0;
     var intervalid;
     var clicked = false;
     var time = 10;
     var timeIntervalID;
+    var correctAnswer = 0;
+    var wrongAnswer = 0;
+    var missedAnswer = 0;
 
     //  Display the question function after hitting the start button
     function displayQuestion(index) {
@@ -62,6 +66,7 @@ $(document).ready(function () {
                 clearInterval(timeIntervalID);
                 $("#timer-id").empty();
                 time = 10;
+                correctAnswer++;
             }
             else {
                 $("main").empty();
@@ -72,6 +77,7 @@ $(document).ready(function () {
                 clearInterval(timeIntervalID);
                 $("#timer-id").empty();
                 time = 10;
+                wrongAnswer++;
             }
         }
 
@@ -99,6 +105,7 @@ $(document).ready(function () {
                 $("main").text("Times up!");
                 clearInterval(intervalid);
                 setTimeout(timingQuestion, 1000);
+                missedAnswer++;
             }
 
         }, 1000);
@@ -124,8 +131,16 @@ $(document).ready(function () {
 
         // intervalid = setInterval(displayQuestionAndListenForInput, 10000);
 
-        if (count == questionArr.length) {
+        if (count == questionArr.length+1) {
             clearInterval(intervalid);
+            clearInterval(timeIntervalID);
+            $("#timer-id").empty();
+            $("main").empty();
+
+            time = 10;
+            $("main").append("<p class='ending-stats'>Correct Answers: " + correctAnswer + "</p>");
+            $("main").append("<p class='ending-stats'>Wrong Answers: " + wrongAnswer + "</p>");
+            $("main").append("<p class='ending-stats'>Missed Answers: " + missedAnswer + "</p>");
         }
     };
 
