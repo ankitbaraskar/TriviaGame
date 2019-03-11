@@ -21,14 +21,28 @@ $(document).ready(function () {
             option2: "Population Density",
             option3: "Wind Speed",
             option4: "Radiation"
+        },
+        {
+            question: "Who is the author of the “Harry Potter” books?",
+            option1: "J. K. Rowling",
+            option2: "J. R. R. Tolkien",
+            option3: "Charles Dickens",
+            option4: "Ernest Hemingway"
+        },
+        {
+            question: "How many sides does an octagon have?",
+            option1: "Two",
+            option2: "Four",
+            option3: "Twenty",
+            option4: "Eight"
         }
     ];
 
-    
+
     var count = 0;
     var intervalid;
     var clicked = false;
-    var time = 10;
+    var time = 30;
     var timeIntervalID;
     var correctAnswer = 0;
     var wrongAnswer = 0;
@@ -57,26 +71,26 @@ $(document).ready(function () {
 
         if (clicked == true) {
             console.log(event);
-            if (event.currentTarget.innerHTML == "Gotham City" || event.currentTarget.innerHTML == "Iron" || event.currentTarget.innerHTML == "Radiation") {
+            if (event.currentTarget.innerHTML == "Gotham City" || event.currentTarget.innerHTML == "Iron" || event.currentTarget.innerHTML == "Radiation" || event.currentTarget.innerHTML == "J. K. Rowling" || event.currentTarget.innerHTML == "Eight") {
                 $("main").empty();
                 $("main").text("Correct Answer!");
                 clearInterval(intervalid);
-                setTimeout(timingQuestion, 1000);
+                setTimeout(timingQuestion, 3000);
 
                 clearInterval(timeIntervalID);
                 $("#timer-id").empty();
-                time = 10;
+                time = 30;
                 correctAnswer++;
             }
             else {
                 $("main").empty();
                 $("main").text("Wrong Answer!");
                 clearInterval(intervalid);
-                setTimeout(timingQuestion, 1000);
+                setTimeout(timingQuestion, 3000);
 
                 clearInterval(timeIntervalID);
                 $("#timer-id").empty();
-                time = 10;
+                time = 30;
                 wrongAnswer++;
             }
         }
@@ -99,37 +113,41 @@ $(document).ready(function () {
             if (clicked == false && time == 0) {
                 clearInterval(timeIntervalID);
                 $("#timer-id").empty();
-                time = 10;
+                time = 30;
 
                 $("main").empty();
                 $("main").text("Times up!");
                 clearInterval(intervalid);
-                setTimeout(timingQuestion, 1000);
+                setTimeout(timingQuestion, 3000);
                 missedAnswer++;
             }
 
         }, 1000);
 
+        // display question based on the count index
         displayQuestion(count);
 
 
+        // click listener that then compares if the answer is true or false
         $(".question-class").on("click", function (event) {
 
             clicked = true;
             inputAnswerCompare(event);
         });
 
+
+        // increase the index for the array by one
         count++;
 
 
     };
 
+
+    // for the end page
     function timingQuestion() {
 
         displayQuestionAndListenForInput();
 
-
-        // intervalid = setInterval(displayQuestionAndListenForInput, 10000);
 
         if (count == questionArr.length+1) {
             clearInterval(intervalid);
@@ -137,7 +155,7 @@ $(document).ready(function () {
             $("#timer-id").empty();
             $("main").empty();
 
-            time = 10;
+            time = 30;
             $("main").append("<p class='ending-stats'>Correct Answers: " + correctAnswer + "</p>");
             $("main").append("<p class='ending-stats'>Wrong Answers: " + wrongAnswer + "</p>");
             $("main").append("<p class='ending-stats'>Missed Answers: " + missedAnswer + "</p>");
