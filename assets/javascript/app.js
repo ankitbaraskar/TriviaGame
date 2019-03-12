@@ -81,6 +81,7 @@ $(document).ready(function () {
                 $("#timer-id").empty();
                 time = 30;
                 correctAnswer++;
+                clicked = false;
             }
             else {
                 $("main").empty();
@@ -92,6 +93,7 @@ $(document).ready(function () {
                 $("#timer-id").empty();
                 time = 30;
                 wrongAnswer++;
+                clicked = false;
             }
         }
 
@@ -155,11 +157,13 @@ $(document).ready(function () {
             $("#timer-id").empty();
             $("main").empty();
 
-            time = 30;
+            
             $("main").append("<p class='ending-stats'>Correct Answers: " + correctAnswer + "</p>");
             $("main").append("<p class='ending-stats'>Wrong Answers: " + wrongAnswer + "</p>");
             $("main").append("<p class='ending-stats'>Missed Answers: " + missedAnswer + "</p>");
 
+            time = 30;
+            clicked = false;
             count =0;
             correctAnswer = 0;
             wrongAnswer = 0;
