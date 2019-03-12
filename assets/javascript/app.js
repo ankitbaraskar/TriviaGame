@@ -6,35 +6,40 @@ $(document).ready(function () {
             option1: "Atlantis City",
             option2: "Springfield",
             option3: "Gotham City",
-            option4: "Zion City"
+            option4: "Zion City",
+            rightanswer: "Gotham City"
         },
         {
             question: "Spinach is high in which mineral?",
             option1: "Zinc",
             option2: "Iron",
             option3: "Juice",
-            option4: "Milk"
+            option4: "Milk",
+            rightanswer: "Iron"
         },
         {
             question: "What is a Geiger Counter used to detect?",
             option1: "Chocolate temperature",
             option2: "Population Density",
             option3: "Wind Speed",
-            option4: "Radiation"
+            option4: "Radiation",
+            rightanswer: "Radiation"
         },
         {
             question: "Who is the author of the “Harry Potter” books?",
             option1: "J. K. Rowling",
             option2: "J. R. R. Tolkien",
             option3: "Charles Dickens",
-            option4: "Ernest Hemingway"
+            option4: "Ernest Hemingway",
+            rightanswer: "J. K. Rowling"
         },
         {
             question: "How many sides does an octagon have?",
             option1: "Two",
             option2: "Four",
             option3: "Twenty",
-            option4: "Eight"
+            option4: "Eight",
+            rightanswer: "Eight"
         }
     ];
 
@@ -71,7 +76,8 @@ $(document).ready(function () {
 
         if (clicked == true) {
             console.log(event);
-            if (event.currentTarget.innerHTML == "Gotham City" || event.currentTarget.innerHTML == "Iron" || event.currentTarget.innerHTML == "Radiation" || event.currentTarget.innerHTML == "J. K. Rowling" || event.currentTarget.innerHTML == "Eight") {
+            console.log(questionArr[count-1].rightanswer);
+            if (event.currentTarget.innerHTML == questionArr[count-1].rightanswer/* "Gotham City" || event.currentTarget.innerHTML == "Iron" || event.currentTarget.innerHTML == "Radiation" || event.currentTarget.innerHTML == "J. K. Rowling" || event.currentTarget.innerHTML == "Eight" */) {
                 $("main").empty();
                 $("main").text("Correct Answer!");
                 clearInterval(intervalid);
@@ -84,8 +90,10 @@ $(document).ready(function () {
                 clicked = false;
             }
             else {
+                
                 $("main").empty();
-                $("main").text("Wrong Answer!");
+                $("main").append("Wrong Answer!");
+                $("main").append("<p>Correct Answer: "+questionArr[count-1].rightanswer+"</p>");
                 clearInterval(intervalid);
                 setTimeout(timingQuestion, 3000);
 
@@ -118,7 +126,8 @@ $(document).ready(function () {
                 time = 30;
 
                 $("main").empty();
-                $("main").text("Times up!");
+                $("main").append("Times Up!");
+                $("main").append("<p>Correct Answer: "+questionArr[count-1].rightanswer+"</p>");
                 clearInterval(intervalid);
                 setTimeout(timingQuestion, 3000);
                 missedAnswer++;
