@@ -145,11 +145,11 @@ $(document).ready(function () {
 
     // for the end page
     function timingQuestion() {
-
+        
         displayQuestionAndListenForInput();
 
 
-        if (count == questionArr.length+1) {
+        if (count == questionArr.length + 1) {
             clearInterval(intervalid);
             clearInterval(timeIntervalID);
             $("#timer-id").empty();
@@ -159,6 +159,14 @@ $(document).ready(function () {
             $("main").append("<p class='ending-stats'>Correct Answers: " + correctAnswer + "</p>");
             $("main").append("<p class='ending-stats'>Wrong Answers: " + wrongAnswer + "</p>");
             $("main").append("<p class='ending-stats'>Missed Answers: " + missedAnswer + "</p>");
+
+            count =0;
+            correctAnswer = 0;
+            wrongAnswer = 0;
+            missedAnswer = 0;
+
+            $("main").append("<button id='start-button'>RESTART!</button>");
+            $("#start-button").on("click", timingQuestion);
         }
     };
 
